@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GerminaCafé — Germinador comunitario de café</title>
+<style>
+  :root{
+    --hueso:#F7F6F3;
+    --blanco:#FFFFFF;
+    --carbon:#111111;
+    --ceniza:#787774;
+    --cafe:#5D4037;
+    --hoja-bg:#EDF3EC;
+    --hoja-txt:#346538;
+    --borde:#EAEAEA;
+    --radio:8px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,sans-serif;
+    background:var(--hueso);
+    color:var(--carbon);
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  .container{
+    max-width:380px;
+    margin:0 auto;
+    padding:0 16px;
+  }
+  h1,h2,h3{font-family:Georgia,"Times New Roman",serif;letter-spacing:-0.02em;line-height:1.1;}
+  h1{font-size:2rem;font-weight:700;}
+  h2{font-size:1.5rem;font-weight:700;margin-bottom:12px;}
+  h3{font-size:1.1rem;font-weight:600;margin-bottom:8px;}
+  p{color:var(--carbon);margin-bottom:12px;}
+  .muted{color:var(--ceniza);font-size:0.9rem;}
+  .tag{
+    display:inline-block;
+    background:var(--hoja-bg);
+    color:var(--hoja-txt);
+    font-size:0.75rem;
+    padding:4px 10px;
+    border-radius:9999px;
+    letter-spacing:0.05em;
+    text-transform:uppercase;
+    margin-bottom:12px;
+  }
+  .btn{
+    display:inline-block;
+    background:var(--carbon);
+    color:#fff;
+    text-decoration:none;
+    padding:14px 20px;
+    border-radius:6px;
+    font-weight:600;
+    text-align:center;
+    border:none;
+    cursor:pointer;
+    font-size:1rem;
+  }
+  .btn:hover{background:#333333;}
+  .btn:active{transform:scale(0.98);}
+  .whatsapp{background:var(--cafe);}
+  .whatsapp:hover{background:#4a3328;}
+
+  section{padding:56px 0;border-bottom:1px solid var(--borde);}
+  section:last-child{border-bottom:none;}
+
+  /* 1. Inicio */
+  .hero{text-align:center;padding:40px 0 24px;}
+  .hero h1{margin-bottom:16px;}
+  .hero p{margin-bottom:20px;max-width:300px;margin-left:auto;margin-right:auto;}
+  .hero .persona{font-size:0.9rem;color:var(--ceniza);margin-bottom:24px;}
+  .hero img{
+    width:100%;height:auto;display:block;margin:0 auto;border-radius:var(--radio);
+    border:1px solid var(--borde);background:#fff;
+  }
+
+  /* 2. Problema */
+  .friccion{margin-bottom:24px;padding:16px;border:1px solid var(--borde);border-radius:var(--radio);background:var(--blanco);}
+  .friccion h3{color:var(--cafe);}
+  .friccion p{font-size:0.95rem;}
+
+  /* 3. Solución */
+  .solucion{margin-bottom:20px;padding:16px;border:1px solid var(--borde);border-radius:var(--radio);background:var(--blanco);}
+  .solucion h3{color:var(--cafe);margin-bottom:6px;}
+  .solucion p{font-size:0.95rem;margin-bottom:4px;}
+  .ruta{margin-top:24px;padding:16px;border:1px solid var(--borde);border-radius:var(--radio);background:var(--blanco);}
+  .ruta p{font-size:0.9rem;color:var(--ceniza);}
+
+  /* 4. Prueba */
+  .dato{margin-bottom:16px;padding:12px;border-left:3px solid var(--cafe);background:var(--blanco);}
+  .dato strong{color:var(--cafe);}
+  .fuente{font-size:0.8rem;color:var(--ceniza);display:block;margin-top:4px;}
+
+  /* 5. Redes */
+  .carrusel{display:flex;overflow-x:auto;snap-type:x mandatory;scroll-snap-type:x mandatory;gap:12px;padding-bottom:12px;}
+  .lamina{
+    flex:0 0 auto;
+    width:300px;height:375px;aspect-ratio:4/5;
+    background:#fff;border:1px solid var(--borde);border-radius:var(--radio);
+    scroll-snap-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    font-size:0.85rem;color:var(--ceniza);text-align:center;padding:12px;
+  }
+  .lamina strong{display:block;color:var(--carbon);margin-bottom:6px;font-size:1rem;}
+
+  /* 6. Cierre */
+  .cierre{text-align:center;padding:40px 0;}
+  .cierre h2{margin-bottom:16px;}
+  .ficha{text-align:left;background:var(--blanco);border:1px solid var(--borde);border-radius:var(--radio);padding:20px;margin-top:24px;}
+  .ficha p{font-size:0.9rem;margin-bottom:8px;}
+  .ficha a{color:var(--cafe);text-decoration:underline;}
+
+  /* CTA fijo móvil */
+  .cta-fijo{
+    position:fixed;bottom:0;left:0;right:0;
+    background:var(--carbon);color:#fff;padding:14px;
+    text-align:center;font-weight:600;font-size:1rem;
+    z-index:100;display:none;
+  }
+  @media (max-width:600px){
+    .cta-fijo{display:block;}
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none !important;transition:none !important;}
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- 1. Inicio -->
+  <section id="inicio">
+    <div class="hero">
+      <span class="tag">GerminaCafé</span>
+      <h1>Gestiona tu germinador de café</h1>
+      <p>Gestiona tu germinador comunitario, calcula materiales y costos reales, y produce chapolas sanas sin perder la inversión.</p>
+      <p class="persona">Administrador del germinador comunitario de café, San Lorenzo, Nariño.</p>
+      <a href="https://wa.me/57XXXXXXXXXX?text=Hola,%20quiero%20información%20sobre%20GerminaCaf%C3%A9" class="btn whatsapp">Escribir por WhatsApp</a>
+      <img src="img/hero.jpg" alt="Germinador de café">
+    </div>
+  </section>
+
+  <!-- 2. El problema -->
+  <section id="problema">
+    <h2>Lo que frena tu germinador</h2>
+    <div class="friccion">
+      <h3>Pérdida de chapolas por mal del tallito</h3>
+      <p>Aparecen focos de volcamiento y las chapolas se vuelcan y mueren.</p>
+      <p>Pasa a los 15 días de la siembra. Cuesta la pérdida del germinador, retraso en labores y la inversión perdida.</p>
+    </div>
+    <div class="friccion">
+      <h3>Cálculos a mano</h3>
+      <p>El administrador calcula materiales, dosis de biocontrol y costos sin herramienta.</p>
+      <p>Pasa antes de cada siembra. Cuesta tiempo, errores y desconocimiento del costo real por chapola.</p>
+    </div>
+    <div class="friccion">
+      <h3>Sin registro de producción</h3>
+      <p>No hay control de cuántas chapolas se producen ni cuánto corresponde cobrar a cada productor.</p>
+      <p>Pasa al finalizar cada ciclo (75-80 días). Cuesta fijar precios justos y rendir cuentas a la asociación.</p>
+    </div>
+  </section>
+
+  <!-- 3. La solución -->
+  <section id="solucion">
+    <h2>Una respuesta por cada fricción</h2>
+    <div class="solucion">
+      <h3>Previene el mal del tallito</h3>
+      <p>La app calcula la dosis de biocontrol (Trichoderma harzianum) y los materiales para cada germinador.</p>
+    </div>
+    <div class="solucion">
+      <h3>Calcula costos reales</h3>
+      <p>Ingresa dimensiones, kilogramos de semilla, número de productores y precios en COP. Obtiene costo total, costo por chapola y costo por productor.</p>
+    </div>
+    <div class="solucion">
+      <h3>Lleva el control</h3>
+      <p>Genera tabla de resultados, gráfico de distribución de costos y exporta la información a CSV.</p>
+    </div>
+    <div class="ruta">
+      <strong>Ruta A — Aplicación web GerminaCafé</strong>
+      <p>Capturas de la app: [falta: dato]</p>
+      <p>Enlace de la app: [falta: dato]</p>
+    </div>
+  </section>
+
+  <!-- 4. Prueba -->
+  <section id="prueba">
+    <h2>Datos que se comprueban</h2>
+    <div class="dato">
+      <strong>Mal del tallito (Rhizoctonia solani) es la principal enfermedad en germinadores de café.</strong>
+      <span class="fuente">Cenicafé, Gaitán (2003); Castro-Toro et al. (2008).</span>
+    </div>
+    <div class="dato">
+      <strong>Trichoderma harzianum brinda protección mayor al 90% contra el hongo.</strong>
+      <span class="fuente">Cenicafé, Castro-Toro et al. (2008).</span>
+    </div>
+    <div class="dato">
+      <strong>Las chapolas permanecen 75 a 80 días en el germinador.</strong>
+      <span class="fuente">Cenicafé, Mejía (2021).</span>
+    </div>
+    <div class="dato">
+      <strong>Producir en finca reduce el costo de la chapola hasta un 53% frente a comprarla en sitio de producción.</strong>
+      <span class="fuente">Cenicafé, López et al. (2008).</span>
+    </div>
+  </section>
+
+  <!-- 5. En redes -->
+  <section id="redes">
+    <h2>GerminaCafé en Instagram</h2>
+    <div class="carrusel">
+      <div class="lamina"><strong>Lámina 1</strong>Qué es GerminaCafé</div>
+      <div class="lamina"><strong>Lámina 2</strong>El problema del mal del tallito</div>
+      <div class="lamina"><strong>Lámina 3</strong>Cómo se calculan los costos</div>
+      <div class="lamina"><strong>Lámina 4</strong>Dosis de biocontrol</div>
+      <div class="lamina"><strong>Lámina 5</strong>Exportar resultados a CSV</div>
+      <div class="lamina"><strong>Lámina 6</strong>Escribe por WhatsApp</div>
+    </div>
+  </section>
+
+  <!-- 6. Cierre -->
+  <section id="cierre">
+    <div class="cierre">
+      <h2>Cierre</h2>
+      <a href="https://wa.me/57XXXXXXXXXX?text=Hola,%20quiero%20información%20sobre%20GerminaCaf%C3%A9" class="btn whatsapp">Escribir por WhatsApp</a>
+      <div class="ficha">
+        <h3>Cómo se hizo</h3>
+        <p>Integrantes: [falta: dato]</p>
+        <p>Herramientas de IA: [falta: dato]</p>
+        <p>Skills usadas: <a href="https://github.com/coreyhaines31/marketingskills" target="_blank">customer-research</a>, <a href="https://github.com/anthropics/skills" target="_blank">frontend-design</a>, <a href="https://github.com/Leonxlnx/taste-skill-classics" target="_blank">minimalist-ui</a>, <a href="https://github.com/Jakeschincariol/instagram-agent-skill" target="_blank">ig-carousel</a>, <a href="https://github.com/Jakeschincariol/instagram-agent-skill" target="_blank">ig-caption</a>, <a href="https://github.com/Jakeschincariol/instagram-agent-skill" target="_blank">ig-human</a>, <a href="https://github.com/ItsssssJack/SlopMonster" target="_blank">slopmonster</a></p>
+        <p>Prompt principal: [falta: dato]</p>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<a href="https://wa.me/57XXXXXXXXXX?text=Hola,%20quiero%20información%20sobre%20GerminaCaf%C3%A9" class="btn whatsapp cta-fijo">Escribir por WhatsApp</a>
+
+</body>
+</html>
